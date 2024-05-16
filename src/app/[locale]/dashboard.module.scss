@@ -1,0 +1,120 @@
+.layout {
+    
+    display: flex;
+}
+
+.dashboard {
+    background-color: #C4C4C4;
+    width: 100%;
+    padding: 2rem;
+
+}
+
+.filter {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    
+    :global {
+        .ant-select-single {
+            height: 3rem;
+            width: 18%;
+        }
+    }
+}
+
+.search__bar {
+    display: flex;
+    width: 100%;
+
+    :global {
+        .ant-input-group, .ant-input-affix-wrapper, .ant-input-search-button {
+            height: 100%;
+        }
+
+        .ant-input-outlined {
+            background-color: #F3F1F1;
+        }
+
+        .ant-input-search .ant-input-group .ant-input-affix-wrapper:not(:last-child) {
+            border-start-start-radius: 4px;
+            border-end-start-radius: 4px;
+        }
+
+        .ant-input-group-addon {
+            width: 13%;
+            background-color: white;
+        }
+
+        .ant-input-outlined:focus, .ant-input-outlined:focus-within {
+            box-shadow: none;
+        }
+
+        .ant-input-search-button {
+            height: 100%;
+            width: 100%;
+
+            svg {
+                transform: scaleX(-1);
+            }
+        }
+
+        .ant-btn.ant-btn-icon-only .anticon {
+            font-size: 2rem;
+        }
+    }
+}
+
+.content {
+    background-color: #D9D9D9;
+    border-radius: 4px;
+    padding: 1.25rem 2.5rem;
+}
+
+.content_card {
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 1rem;
+}
+
+.content_icon {
+    width: 1.5rem;
+    margin-right: 0.7rem;
+    opacity: 0.8;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 1rem;
+    :global {
+        .ant-pagination {
+            .ant-pagination-item-active {
+                border-color: #4200FF;
+                a {
+                    color: #4200FF;
+                }
+            }
+            
+            .ant-pagination-disabled {
+                background-color: #919EAB;
+            }
+
+            li {
+                background-color: #ffffff;
+            }
+
+            .ant-pagination-item:hover{
+                background-color: #ffffff;
+                border-color: #4200FF;
+            }
+
+        }
+    }
+}
+@media (max-width: 767px) {
+    .content {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    
+  }

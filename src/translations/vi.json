@@ -1,0 +1,52 @@
+{
+    "login": {
+        "username": "Tên người dùng",
+        "password": "Mật khẩu",
+        "remember": "Ghi nhớ tài khoản",
+        "login": "Đăng nhập",
+        "loginSuccess": "Đăng nhập thành công!",
+        "loginInfoNotTrue": "Thông tin đăng nhập không chính xác!",
+        "passMustBeLeast8": "Mật khẩu của bạn tối thiếu 8 kí tự",
+        "passMustBeNumberAndCharacter": "Mật khẩu của bạn phải bao gồm 1 số và 1 kí tự",
+        "userRequired": "Bạn chưa nhập tên người dùng",
+        "passRequired": "Bạn chưa nhập mật khẩu"
+    },
+    "sidebar": {
+        "user": "Người dùng",
+        "point": "Điểm",
+        "editAvatar": "Chỉnh sửa",
+        "logout": "Đăng xuất",
+        "upload": "Tải lên",
+        "cancel": "Hủy bỏ"
+    },
+    "dashboard": {
+        "search": "Tìm kiếm",
+        "difficulty": "Độ khó",
+        "easy": "Dễ",
+        "medium": "Trung bình",
+        "hard": "Khó",
+        "minutes": "phút",
+        "points": "điểm"
+    },
+    "exam": {
+        "timeLeft": "Còn lại",
+        "question": "Câu",
+        "backQuestion": "Câu trước",
+        "nextQuestion": "Câu sau",
+        "submit": "Nộp bài",
+        "minutes": "phút",
+        "seconds": "giây",
+        "totalQuestions": "Tổng số câu hỏi",
+        "totalTrueAnswers": "Số câu trả lời đúng",
+        "totalNotTrueAnswers": "Số câu trả lời chưa đúng",
+        "totalWrongAnswers": "Số câu trả lời sai",
+        "points": "Điểm số",
+        "dashboard": "Trang chủ"
+    },
+    "notification": {
+        "success": "Thành công",
+        "error": "Lỗi",
+        "info": "Thông tin",
+        "warn": "Cảnh báo"
+    }
+}

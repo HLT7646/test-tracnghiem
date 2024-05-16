@@ -1,0 +1,42 @@
+.exam_finish {
+    background-color: #C4C4C4;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .modal_result {
+        background-color: #D9D9D9;
+        width: 75%;
+        border-radius: 6px;
+        border: 1px solid #00000080;
+        padding: 1.5rem;
+
+        .modal_content {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+    }
+}
+
+.btn_box {
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 2rem;
+
+    .btn_submit {
+        font-weight: 700;
+        background-color: #9F9D9F;
+        border-radius: 2rem;
+        height: 3.5rem;
+        width: 10rem;
+    }
+
+    :global {
+        .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+            background-color: #bbb9b9;
+        }
+    }
+}

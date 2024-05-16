@@ -1,0 +1,52 @@
+{
+    "login": {
+        "username": "username",
+        "password": "password",
+        "remember": "Remember me",
+        "login": "Login",
+        "loginSuccess": "Login success!",
+        "loginInfoNotTrue": "Login information not true!",
+        "passMustBeLeast8": "Your password must be at least 8 characters",
+        "passMustBeNumberAndCharacter": "Your password must be at least one number and one character",
+        "userRequired": "Please input your Username!",
+        "passRequired": "Please input your Password!"
+    },
+    "sidebar": {
+        "user": "User",
+        "point": "Point",
+        "editAvatar": "Edit",
+        "logout": "Logout",
+        "upload": "Upload",
+        "cancel": "Cancel"
+    },
+    "dashboard": {
+        "search": "Search",
+        "difficulty": "Difficulty",
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard",
+        "minutes": "minutes",
+        "points": "points"
+    },
+    "exam": {
+        "timeLeft": "Time left",
+        "question": "Question",
+        "backQuestion": "Back",
+        "nextQuestion": "Next",
+        "submit": "Submit",
+        "minutes": "minutes",
+        "seconds": "seconds",
+        "totalQuestions": "Total questions",
+        "totalTrueAnswers": "Total true answers",
+        "totalNotTrueAnswers": "Total not true answers",
+        "totalWrongAnswers": "Total wrong answers",
+        "points": "Points",
+        "dashboard": "Dashboard"
+    },
+    "notification": {
+        "success": "Success",
+        "error": "Error",
+        "info": "Infomation",
+        "warn": "Warning"
+    }
+}

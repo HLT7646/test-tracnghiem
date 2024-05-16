@@ -1,0 +1,122 @@
+.login {
+    font-size: 20px;
+    
+    :global {
+        #basic_username {
+            padding: 0 1em;
+        }
+        #basic_password {
+            padding-left: 1rem;
+        } 
+        .ant-input-affix-wrapper >input.ant-input {
+            background: #d9d9d9;
+        }
+
+        .ant-input-suffix {
+            background-color: #d9d9d9;
+            margin: 0;
+        }
+
+        .ant-input-outlined:focus-within {
+            box-shadow: none;
+        }
+    }
+   
+}
+
+.login__bg {
+    background-image: url('../../../assets/img/login-bg.jpg') ;
+}
+
+.form__box {
+    position: absolute;
+    top: 18%;
+    right: 7%;
+    width: 30rem;
+    display: flex;
+}
+
+.login__form {
+    position: relative;
+    background-color: #999595;
+    border: 3px solid #FBBC1A;
+    border-radius: 6px;
+    font-size: 20px;
+    padding: 5rem 3rem;
+}
+
+.login__logo {
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #FBBC1A;
+    background-color: #999595;
+    height: 6rem;
+    width: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    top: -3rem;
+    right: calc(50% - 3rem);}
+
+.logo__img {
+    max-width: 85%;
+    
+}
+
+.form__input {
+    width: 100%;
+}
+
+.input__text {
+    width: 100%;
+    border-radius: 4px;
+    padding: 0;
+    svg{
+        width: 3.5rem;
+        height: 3.5rem;
+        margin: 0.5rem 1rem;
+    }
+}
+
+.input__password {
+    width: 100%;
+    border-radius: 4px;
+    padding: 0;
+    svg[data-icon = 'unlock']{
+        width: 3.5rem;
+        height: 3.5rem;
+        margin: 0.5rem 1rem;
+    }
+    svg[data-icon *= 'eye']{
+        width: 2rem;
+        height: 2rem;
+        margin-right: 1rem;
+    }
+}
+
+.ant-form-item {
+    align-items: center;
+}
+
+.btn__login {
+    background: #d9d9d9;
+    width: 100%;
+    border-radius: 4px;
+    height: 4rem;
+}
+
+
+.btn__login:hover {
+    border: 1px solid black;
+}
+@media screen and (max-width: 768px) { 
+    .form__box {
+        position: absolute;
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Adjust for perfect centering */
+        width: 340px;
+    }
+
+}
