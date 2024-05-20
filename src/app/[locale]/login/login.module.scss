@@ -24,8 +24,8 @@
    
 }
 
-.login__bg {
-    background-image: url('../../../assets/img/login-bg.jpg') ;
+.login__bg2 {
+    display: none;
 }
 
 .form__box {
@@ -110,6 +110,11 @@
 .btn__login:hover {
     border: 1px solid black;
 }
+.language{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
 @media screen and (max-width: 768px) { 
     .form__box {
         position: absolute;
@@ -118,5 +123,10 @@
         transform: translate(-50%, -50%); /* Adjust for perfect centering */
         width: 340px;
     }
-
+    .login__bg{
+        display: none;
+    }
+    .login__bg2{
+        display: block;
+    }
 }

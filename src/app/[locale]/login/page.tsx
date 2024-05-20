@@ -6,6 +6,7 @@ import styles from './login.module.scss'
 import Image from 'next/image';
 import cameraLogo from '@/assets/img/camera-logo.png';
 import bg_img from '@/assets/img/login-bg.jpg';
+import bg_img2 from '@/assets/img/bg2.png';
 import { loginFunc } from '@/api/login';
 import { showNotiError, showNotiSuccess } from '@/components/Noti/notification';
 import Cookies from 'js-cookie';
@@ -24,11 +25,19 @@ export default function Login() {
     const t = useTranslations();
     const [form] = Form.useForm();
     const [values, setValues] = useState<FieldType>({});
+    const handleLanguageChange = (event: { target: { value: any; }; }) => {
+        const selectedLanguage = event.target.value;
+        if (selectedLanguage === 'vi') {
+            router.push('/vi/login');
+        } else if (selectedLanguage === 'en') {
+            router.push('/en/login');
+        }
+    };
 
     useEffect(() => {
         let fields = {
-          username: Cookies.get('username') || '',
-          password: Cookies.get('password') || ''
+            username: Cookies.get('username') || '',
+            password: Cookies.get('password') || ''
         };
         form.setFieldsValue(fields);
     }, [form]);
@@ -36,7 +45,7 @@ export default function Login() {
     const loginMutation = useMutation(values => loginFunc(values), {
         onSuccess: (res) => {
             Cookies.set('token', res.data.token);
-            if(values.remember) {
+            if (values.remember) {
                 Cookies.set('username', values.username!)
                 Cookies.set('password', values.password!)
             }
@@ -48,8 +57,8 @@ export default function Login() {
             showNotiError(t('notification.error'), t('login.loginInfoNotTrue'))
         },
     });
-    
-    const onFinish: FormProps<FieldType>['onFinish'] = async (values:any) => {
+
+    const onFinish: FormProps<FieldType>['onFinish'] = async (values: any) => {
         setValues(values);
         await loginMutation.mutate(values)
     };
@@ -57,7 +66,7 @@ export default function Login() {
     const validatePassword = (rule: any, value: string, callback: any) => {
         const regexPassword = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
 
-        if(value) {
+        if (value) {
             if (value.length < 7) {
                 callback(t('login.passMustBeLeast8'))
             }
@@ -66,52 +75,62 @@ export default function Login() {
             }
             callback();
         }
-      };
-    
+    };
+
     return (
-      <div className={styles.login}>
-        <div className={styles.login__bg}/>
-        <Image src={bg_img} alt='' height={1920} />
-        <div className={styles.form__box}>
-            <div className={styles.login__logo}>
-                <Image src={cameraLogo} alt='' className={styles.logo__img}/>
+        <div className={styles.login}>
+            <div/>
+            <Image className={styles.login__bg} src={bg_img} alt='' height={1920}/>
+            <Image className={styles.login__bg2} src={bg_img2} alt='' height={1920}/>
+            <div className={styles.form__box}>
+                <div className={styles.login__logo}>
+                    <Image src={cameraLogo} alt='' className={styles.logo__img} />
+                </div>
+                <Form
+                    name="basic"
+                    labelCol={{ span: 8 }}
+                    initialValues={{ remember: true }}
+                    autoComplete="off"
+                    className={styles.login__form}
+                    onFinish={onFinish}
+                    form={form}
+                >
+                    <Form.Item<FieldType>
+                        name="username"
+                        rules={[{ required: true, message: t('login.userRequired') }]}
+                    >
+                        <Input prefix={<UserOutlined />} placeholder={t('login.username')} className={styles.input__text} />
+                    </Form.Item>
+
+                    <Form.Item<FieldType>
+                        name="password"
+                        rules={[{ required: true, message: t('login.passRequired') }, { validator: validatePassword }]}
+                    >
+                        <Input.Password placeholder={t('login.password')} prefix={<UnlockOutlined />} className={styles.input__password} />
+                    </Form.Item>
+
+                    <Form.Item<FieldType>
+                        name="remember"
+                        valuePropName="checked"
+                        wrapperCol={{ span: 16 }}
+                    >
+                        <Checkbox>{t('login.remember')}</Checkbox>
+                    </Form.Item>
+
+                    <Button type="text" htmlType="submit" className={styles.btn__login + ' uppercase'}>
+                        {t('login.login')}
+                    </Button>
+
+                </Form>
+
             </div>
-            <Form
-                name="basic"
-                labelCol={{ span: 8 }}
-                initialValues={{ remember: true }}
-                autoComplete="off"
-                className={styles.login__form}
-                onFinish={onFinish}
-                form={form}
-            >
-                <Form.Item<FieldType>
-                    name="username"
-                    rules={[{ required: true, message: t('login.userRequired') },]}
-                >
-                    <Input prefix={<UserOutlined />} placeholder={t('login.username')} className={styles.input__text}/>
-                </Form.Item>
-
-                <Form.Item<FieldType>
-                    name="password"
-                    rules={[{ required: true, message: t('login.passRequired') }, {validator: validatePassword}]}
-                >
-                    <Input.Password placeholder={t('login.password')} prefix={<UnlockOutlined />} className={styles.input__password}/>
-                </Form.Item>
-
-                <Form.Item<FieldType>
-                    name="remember"
-                    valuePropName="checked"
-                    wrapperCol={{ span: 16 }}
-                >
-                    <Checkbox>{t('login.remember')}</Checkbox>
-                </Form.Item>
-
-                <Button type="text" htmlType="submit" className={styles.btn__login + ' uppercase'}>
-                    {t('login.login')}
-                </Button>
-            </Form>
+            <div className={styles.language}>
+                <select onChange={handleLanguageChange}>
+                    <option value="">Chọn ngôn ngữ</option>
+                    <option value="vi">Tiếng Việt</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
         </div>
-      </div>
     )
-  }
+}

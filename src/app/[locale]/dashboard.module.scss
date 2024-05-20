@@ -17,8 +17,10 @@
     
     :global {
         .ant-select-single {
-            height: 3rem;
             width: 18%;
+        }
+        .ant-select-selector >span{
+            font-size: 12px;
         }
     }
 }
@@ -111,10 +113,13 @@
         }
     }
 }
+
 @media (max-width: 767px) {
     .content {
       grid-template-columns: repeat(1, minmax(0, 1fr));
     }
-
+    .dashboard {
+        padding-left: 0;
+    }
     
   }

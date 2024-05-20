@@ -22,6 +22,7 @@
     "dashboard": {
         "search": "Search",
         "difficulty": "Difficulty",
+        "all":"All",
         "easy": "Easy",
         "medium": "Medium",
         "hard": "Hard",

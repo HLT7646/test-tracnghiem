@@ -12,7 +12,8 @@ const userSlice = createSlice({
     name: 'user',
     initialState: {
       data: <any>{
-        email: 'thanhnh@gmail.com',
+        email: 'kminchelle@qq.com',
+        image: "https://robohash.org/Jeanne.png?set=set4",
         totalPoint: 2488
       },
       loadDataStatus: loadStatus.None,

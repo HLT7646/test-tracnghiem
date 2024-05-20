@@ -121,7 +121,7 @@ export default function SideBar() {
       <>
             {isMobile ? (
                 <div className={styles.buttonmenu}>
-                    <Button type="primary" onClick={showModal}>
+                    <Button type="text" onClick={showModal}>
                         <img src="/buttonmenu.png" alt="Menu" />
                     </Button>
                     <CustomModal isVisible={isModalVisible} onClose={handleModalClose}>

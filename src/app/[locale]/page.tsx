@@ -142,7 +142,7 @@ export default function Home() {
           })}
         </div>
         <div className={styles.pagination}>
-          <Pagination defaultCurrent={page} total={30} onChange={onChange} />
+          <Pagination defaultCurrent={page} total={50} onChange={onChange} />
         </div>
       </div>
     </div>
