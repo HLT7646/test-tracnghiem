@@ -63,25 +63,13 @@ export default function Login() {
         await loginMutation.mutate(values)
     };
 
-    const validatePassword = (rule: any, value: string, callback: any) => {
-        const regexPassword = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
-
-        if (value) {
-            if (value.length < 7) {
-                callback(t('login.passMustBeLeast8'))
-            }
-            if (!regexPassword.test(value)) {
-                callback(t('login.passMustBeNumberAndCharacter'));
-            }
-            callback();
-        }
-    };
+   
 
     return (
         <div className={styles.login}>
-            <div/>
-            <Image className={styles.login__bg} src={bg_img} alt='' height={1920}/>
-            <Image className={styles.login__bg2} src={bg_img2} alt='' height={1920}/>
+            <div />
+            <Image className={styles.login__bg} src={bg_img} alt='' height={1920} />
+            <Image className={styles.login__bg2} src={bg_img2} alt='' height={1920} />
             <div className={styles.form__box}>
                 <div className={styles.login__logo}>
                     <Image src={cameraLogo} alt='' className={styles.logo__img} />
@@ -102,9 +90,24 @@ export default function Login() {
                         <Input prefix={<UserOutlined />} placeholder={t('login.username')} className={styles.input__text} />
                     </Form.Item>
 
-                    <Form.Item<FieldType>
+                    <Form.Item
                         name="password"
-                        rules={[{ required: true, message: t('login.passRequired') }, { validator: validatePassword }]}
+                        rules={[
+                            { required: true, message: t('login.passRequired') },
+                            {
+                                validator: (_, value, callback) => {
+                                    const regexPassword = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/;
+
+                                    if (value && value.length < 7) {
+                                        callback(t('login.passMustBeLeast8'));
+                                    } else if (value && !regexPassword.test(value)) {
+                                        callback(t('login.passMustBeNumberAndCharacter'));
+                                    } else {
+                                        callback();
+                                    }
+                                }
+                            }
+                        ]}
                     >
                         <Input.Password placeholder={t('login.password')} prefix={<UnlockOutlined />} className={styles.input__password} />
                     </Form.Item>
