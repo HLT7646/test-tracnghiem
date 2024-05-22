@@ -14,23 +14,21 @@ import type { PaginationProps } from 'antd';
 import { DataType, dummyData } from '@/data/dummy';
 import { DIFFICULTY, DEFAULT_LIMIT, STAR_MAX } from '@/constant';
 import { useTranslations } from 'next-intl';
-import { getRequestConfig } from 'next-intl/server';
+import { useSelector } from 'react-redux';
 export default function Home() {
   const { Search } = Input;
   const { Option } = Select;
-  
   const t = useTranslations();
   const router = useRouter();
   const pathname = usePathname();
-  const locale = pathname.split('/')[1];
   const searchParams = useSearchParams();
+  const locale = pathname.split('/')[1];
+  const [totalResults, setTotalResults] = useState<number>(0);
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
   const [data, setData] = useState<Array<DataType>>([]);
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
-  const [searchSuggestions, setSearchSuggestions] = useState([]);
+  const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
   const isCookies = Cookies.get('token');
-
-
   const saveSearchTerm = (term: string) => {
     const previousSearches = JSON.parse(localStorage.getItem('searches') ?? '[]') as string[];
     if (!previousSearches.includes(term)) {
@@ -38,6 +36,9 @@ export default function Home() {
       localStorage.setItem('searches', JSON.stringify(previousSearches));
     }
   };
+ if(!isCookies){
+  router.push(`/en/login`)
+ }
   useEffect(() => {
     const getSearchSuggestions = () => {
       const previousSearches = JSON.parse(localStorage.getItem('searches') || '[]');
@@ -47,50 +48,50 @@ export default function Home() {
     setSearchSuggestions(getSearchSuggestions());
   }, []);
 
-
   useEffect(() => {
     const firstIndex = (page - 1) * DEFAULT_LIMIT;
     const filteredData = dummyData.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
     const dataEntry = filteredData.slice(firstIndex, firstIndex + DEFAULT_LIMIT);
+    setTotalResults(filteredData.length);
     setData(dataEntry);
   }, [page, searchTerm]);
-
   const createQueryString = useCallback((name: string, value?: string) => {
-    const params = new URLSearchParams(searchParams.toString())
+    const params = new URLSearchParams(searchParams.toString());
     if (value) {
-      params.set(name, value)
+      params.set(name, value);
     } else {
       params.delete(name);
     }
-    return params.toString()
+    return params.toString();
   }, [searchParams]);
 
-  const onSearch: SearchProps['onSearch'] = (value, _e, info) => {
+  const onSearch: SearchProps['onSearch'] = (value) => {
     setSearchTerm(value);
     setPage(1);
     saveSearchTerm(value);
-    router.push(pathname + '?' + createQueryString('search', value))
+    router.push(pathname + '?' + createQueryString('search', value));
   };
 
   const onSelect = (value: string) => {
-    router.push(pathname + '?' + createQueryString('select', value))
+    router.push(pathname + '?' + createQueryString('select', value));
   };
 
   const onChange: PaginationProps['onChange'] = (page) => {
     setPage(page);
     if (page !== 1) {
-      router.push(pathname + '?' + createQueryString('page', page.toString()))
+      router.push(pathname + '?' + createQueryString('page', page.toString()));
     } else {
-      router.push(pathname + '?' + createQueryString('page'))
+      router.push(pathname + '?' + createQueryString('page'));
     }
   };
+
   const options = searchSuggestions
-  .filter((suggestion) => suggestion !== '') 
-  .map((suggestion, index) => ({
-    label: suggestion,
-    value: suggestion,
-    key: index,
-  }));
+    .filter((suggestion) => suggestion !== '')
+    .map((suggestion, index) => ({
+      label: suggestion,
+      value: suggestion,
+      key: index,
+    }));
 
   return (
     <div className={styles.layout}>
@@ -98,35 +99,34 @@ export default function Home() {
       <div className={styles.dashboard}>
         <div className={styles.filter}>
           <AutoComplete
-          
-            style={{width:'100%'}}
+            style={{ width: '100%' }}
             options={options}
-            
+            defaultValue={searchTerm}
           >
             <Search
               placeholder={t('dashboard.search')}
               allowClear
-              defaultValue={searchParams.get('search') || ''}
               onSearch={onSearch}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className={styles.search__bar}
             />
-             </AutoComplete>
-            <Select
-              onChange={onSelect}
-              value={searchParams.get('select') || t('dashboard.difficulty')}
-              allowClear
-            >
-              {DIFFICULTY.map(item => (
-                <Option key={item.value} value={item.value} label={t(`dashboard.${item.label}`)}>
-                  {t(`dashboard.${item.label}`)}
-                </Option>
-              ))}
-            </Select>
+          </AutoComplete>
+          <Select
+            onChange={onSelect}
+            value={searchParams.get('select') || t('dashboard.difficulty')}
+            allowClear
+          >
+            {DIFFICULTY.map(item => (
+              <Option key={item.value} value={item.value} label={t(`dashboard.${item.label}`)}>
+                {t(`dashboard.${item.label}`)}
+              </Option>
+            ))}
+          </Select>
         </div>
         <div className={styles.content + ' grid grid-cols-2 gap-10 justify-items-center'}>
           {data.map(item => {
-            const starFill = Array.from({ length: item.difficult }, (v, i) => <StarFilled key={i} />)
-            const starEmpty = Array.from({ length: (STAR_MAX - item.difficult) }, (v, i) => <StarOutlined key={i} />)
+            const starFill = Array.from({ length: item.difficult }, (v, i) => <StarFilled key={i} />);
+            const starEmpty = Array.from({ length: (STAR_MAX - item.difficult) }, (v, i) => <StarOutlined key={i} />);
             return (
               <div className={styles.content_card + ' w-10/12 cursor-pointer'} key={item.id} onClick={() => router.push(`${locale}/exam`)}>
                 <p className='font-medium mb-1'>{item.name}</p>
@@ -138,13 +138,13 @@ export default function Home() {
                   {starFill} {starEmpty}
                 </div>
               </div>
-            )
+            );
           })}
         </div>
         <div className={styles.pagination}>
-          <Pagination defaultCurrent={page} total={50} onChange={onChange} />
+          <Pagination defaultCurrent={page} total={totalResults} onChange={onChange} />
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -13,7 +13,8 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl';
 import { useMutation } from '@tanstack/react-query';
-
+import { useDispatch } from 'react-redux';
+import { setUsername, setEmail, setImage } from '@/redux/reducer/userSlice';
 type FieldType = {
     username?: string;
     password?: string;
@@ -33,7 +34,7 @@ export default function Login() {
             router.push('/en/login');
         }
     };
-
+    const dispatch = useDispatch();
     useEffect(() => {
         let fields = {
             username: Cookies.get('username') || '',
@@ -45,6 +46,10 @@ export default function Login() {
     const loginMutation = useMutation(values => loginFunc(values), {
         onSuccess: (res) => {
             Cookies.set('token', res.data.token);
+            console.log(res.data);
+            dispatch(setUsername(res.data.username));
+            dispatch(setEmail(res.data.email));
+            dispatch(setImage(res.data.image));
             if (values.remember) {
                 Cookies.set('username', values.username!)
                 Cookies.set('password', values.password!)

@@ -6,23 +6,19 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import type { GetProp, UploadProps, UploadFile } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { useAppSelector } from '@/redux/hook';
 import { useTranslations } from 'next-intl';
 import CustomModal from './custommodal.jsx';
-
+import { useSelector } from 'react-redux';
 export default function SideBar() {
     const t = useTranslations();
     const router = useRouter();
     const pathname = usePathname().split('/');
     const [avatar, setAvatar] = useState<string>('/avatar.png');
     const [isOpenModal, setIsOpen] = useState(false);
-    const [sideData, setSideData] = useState<any>({});
-    const dataState = useAppSelector(state => state.user);
     type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
-
-    useEffect(() => {
-      setSideData(dataState.data)
-    }, [dataState]);
+    const username = useSelector((state:any) => state.user.username);
+    const email = useSelector((state:any) => state.user.email);
+    
 
     const logOut = () => {
         Cookies.remove('token');
@@ -78,10 +74,10 @@ export default function SideBar() {
             setIsMobile(window.innerWidth <= 767);
         };
 
-        // Initial check
+        
         handleResize();
 
-        // Event listener
+        
         window.addEventListener('resize', handleResize);
 
         // Cleanup event listener
@@ -103,8 +99,8 @@ export default function SideBar() {
                     <Avatar src={avatar} />
                 </div>
                 <div className={styles.user_info}>
-                    <p className="username">{t('sidebar.user')}: {sideData?.email}</p>
-                    <p className="point">{t('sidebar.point')}: {sideData?.totalPoint}</p>
+                    <p className="username">{t('sidebar.user')}:{username}</p>
+                    <p className="point">Email:{email} </p>
                 </div>
             </div>
             <div className={styles.sidebar__btn}>
@@ -116,6 +112,7 @@ export default function SideBar() {
                 </Button>
             </div>
         </div>
+
     );
     return (
       <>
@@ -131,7 +128,22 @@ export default function SideBar() {
             ) : (
                 sidebarContent
             )}
-            <CustomModal isVisible={isOpenModal} onClose={() => setIsOpen(false)}>
+            <CustomModal isVisible={isOpenModal} onClose={() => setIsOpen(false)}
+             >
+              <Modal
+                open={isOpenModal}
+                title={t('sidebar.editAvatar') + ' avatar'}
+                onOk={handleOk}
+                onCancel={() => setIsOpen(false)}
+                footer={(_, { OkBtn, CancelBtn }) => (
+                <>
+                    <CancelBtn/>
+                    <OkBtn />
+                </>
+                )}
+                cancelText={t('sidebar.cancel')}
+                className={styles.modal}
+            >    
                 <div className={styles.modal}>
                     <Upload
                         action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
@@ -162,6 +174,7 @@ export default function SideBar() {
                         />
                     )}
                 </div>
+                </Modal>
             </CustomModal>
         </>
     )
